@@ -1,0 +1,2 @@
+# Generate 2nd-order Hamming-based HOCUS similarities from the toy data and save as 'test1.tab'
+ ./hocus.R -i toydata.tab -o test1 --order 2
