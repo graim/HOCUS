@@ -46,8 +46,7 @@ get.sim <- function( a, b ) {
 #  return( sum(a[a==b])/length(a) )
 #} 
 
-
-## Main
+### Main ###
 main <- function(argv) {
   if (missing(argv)) argv <- commandArgs(trailingOnly=T)
 
@@ -69,8 +68,8 @@ main <- function(argv) {
 
   ## Set defaults, exit if input file is missing.
   if( is.null(o$prefix) ) { o$prefix = 'hocus_network' }
-  if( is.null(o$H) ) { o$H=F }
   if( is.null(o$d) ) { o$d='\t' }
+  if ( !is.null(o$header) ) { o$header <- TRUE } else { o$header <- FALSE }
   if( is.null(o$order) ) { o$order=2 }
   if( is.null(o$input) ) { 
     cat(getopt(spec, usage=T))
@@ -82,12 +81,7 @@ main <- function(argv) {
 
   ## Load data
   cat( paste("Opening",o$input,"for reading...\n",sep=' ') );flush.console()
-  if(!is.null(o$H)) { 
-    dat.voxels <- data.matrix( read.table(o$input, sep=o$d, header=o$H, row.names=1, check.names=F) )
-    dat.voxels <- dat.voxels[-1,] 
-  } else {
-    dat.voxels <- data.matrix( read.table(o$input, sep=o$d, header=F, row.names=1, check.names=F) )
-  }
+  dat.voxels <- data.matrix( read.table(o$input, sep=o$d, header=o$header, row.names=1, check.names=F) )
   if (!is.numeric(dat.voxels)) {
     stop("Input file isn't numeric. Check for strings after the first column.")
   }
